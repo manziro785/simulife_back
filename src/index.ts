@@ -4,22 +4,12 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import charactersRoutes from "./routes/characters";
 import daysRoutes from "./routes/days";
-import { sequelize } from "./db";
+import sequelize from "./db";
 import "./models/User";
 import "./models/Character";
 import "./models/DayStoty";
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
-    console.log("✅ Database synchronized!");
-  } catch (err) {
-    console.error("❌ Sync error:", err);
-  }
-})();
-
-dotenv.config();
+dotenv.config(); // загружаем переменные окружения
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,4 +23,14 @@ app.use("/days", daysRoutes);
 
 app.get("/", (_, res) => res.send("SimuLife Backend is running!"));
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+(async () => {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync({ alter: true }); // синхронизируем модели
+    console.log("✅ Database connected and synchronized!");
+
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  } catch (err) {
+    console.error("❌ Database connection failed:", err);
+  }
+})();

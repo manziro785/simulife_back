@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../db";
+import sequelize from "../db";
 
 export class DayStory extends Model {
   declare id: number;

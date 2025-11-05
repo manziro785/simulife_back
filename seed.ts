@@ -1,4 +1,4 @@
-import { sequelize } from "./src/db";
+import sequelize from "./src/db";
 import { Character } from "./src/models/Character";
 import { DayStory } from "./src/models/DayStoty";
 import { charactersData } from "./src/data/characters";
