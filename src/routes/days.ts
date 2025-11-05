@@ -8,7 +8,13 @@ const router = Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const days = await DayStory.findAll();
-    res.json(days);
+    const mapped = days.map((d) => ({
+      ...d.toJSON(),
+      // Sequelize возвращает JSON объекты как строки в некоторых БД, поэтому можно парсить
+      choices: d.choices ?? [],
+      lesson: d.lesson ?? {},
+    }));
+    res.json(mapped);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Ошибка при получении историй" });
