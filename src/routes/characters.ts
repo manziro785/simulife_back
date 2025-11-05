@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { Character } from "../models/Character";
+import { Request, Response } from "express";
 
 const router = Router();
 
-router.get("/", async (_, res) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const characters = await Character.findAll();
     res.json(characters);

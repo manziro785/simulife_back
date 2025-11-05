@@ -8,6 +8,7 @@ import sequelize from "./db";
 import "./models/User";
 import "./models/Character";
 import "./models/DayStoty";
+import { Request, Response } from "express";
 
 dotenv.config(); // загружаем переменные окружения
 
@@ -21,8 +22,9 @@ app.use("/auth", authRoutes);
 app.use("/characters", charactersRoutes);
 app.use("/days", daysRoutes);
 
-app.get("/", (_, res) => res.send("SimuLife Backend is running!"));
-
+app.get("/", (req: Request, res: Response) =>
+  res.send("SimuLife Backend is running!")
+);
 (async () => {
   try {
     await sequelize.authenticate();

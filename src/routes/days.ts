@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { DayStory } from "../models/DayStoty";
+import { Request, Response } from "express";
 
 const router = Router();
 
-router.get("/", async (_, res) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const days = await DayStory.findAll();
     res.json(days);
