@@ -4,11 +4,15 @@ import { charactersData } from "../data/characters"; // путь к твоему
 
 const router = Router();
 
-// GET всех персонажей
+// GET всех персонажей с полем stats для фронтенда
 router.get("/", async (req: Request, res: Response) => {
   try {
     const characters = await Character.findAll();
-    res.json(characters);
+    const mapped = characters.map((c) => ({
+      ...c.toJSON(),
+      stats: { money: c.money, energy: c.energy, mood: c.mood },
+    }));
+    res.json(mapped);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Ошибка при получении персонажей" });
