@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
+import seedRoutes from "./routes/seed";
 import charactersRoutes from "./routes/characters";
 import daysRoutes from "./routes/days";
 import sequelize from "./db";
@@ -20,6 +21,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
 app.use(express.json());
 
 app.use("/auth", authRoutes);
+app.use("/seed", seedRoutes);
 app.use("/characters", authMiddleware, charactersRoutes);
 app.use("/days", authMiddleware, daysRoutes);
 
