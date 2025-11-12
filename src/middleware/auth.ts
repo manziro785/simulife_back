@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "your-secret-key";
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export interface AuthRequest extends Request {
   user?: { email: string };
@@ -23,6 +23,6 @@ export const authMiddleware = (
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(401).json({ message: "Недействительный токен" });
+    return res.status(401).json({ message: "Недействительный токен" }); // ← Добавлен return
   }
 };

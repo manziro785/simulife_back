@@ -1,11 +1,12 @@
 import { Router, Request, Response } from "express";
 import { Character } from "../models/Character";
-import { charactersData } from "../data/characters"; // путь к твоему файлу
+import { charactersData } from "../data/characters";
+import { authMiddleware } from "../middleware/auth"; // ← импорт
 
 const router = Router();
 
-// GET всех персонажей с полем stats для фронтенда
-router.get("/", async (req: Request, res: Response) => {
+// ШАГ 1: Защищённый роут (только с токеном)
+router.get("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const characters = await Character.findAll();
     const mapped = characters.map((c) => ({
@@ -19,7 +20,8 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
-// POST - добавить персонажей из массива
+// ШАГ 2: Публичный роут для заполнения БД (БЕЗ токена)
+// ⚠️ УДАЛИТЬ ПОСЛЕ ЗАПОЛНЕНИЯ БД!
 router.post("/seed", async (_req: Request, res: Response) => {
   try {
     const created = await Promise.all(

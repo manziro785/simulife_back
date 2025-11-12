@@ -9,8 +9,9 @@ import "./models/User";
 import "./models/Character";
 import "./models/DayStoty";
 import { Request, Response } from "express";
+import { authMiddleware } from "./middleware/auth"; // ← ШАГ 1: ИМПОРТ
 
-dotenv.config(); // загружаем переменные окружения
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,16 +20,17 @@ app.use(cors({ origin: process.env.FRONTEND_URL || "http://localhost:3000" }));
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-app.use("/characters", charactersRoutes);
-app.use("/days", daysRoutes);
+app.use("/characters", authMiddleware, charactersRoutes);
+app.use("/days", authMiddleware, daysRoutes);
 
 app.get("/", (req: Request, res: Response) =>
   res.send("SimuLife Backend is running!")
 );
+
 (async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ alter: true }); // синхронизируем модели
+    await sequelize.sync({ alter: true });
     console.log("✅ Database connected and synchronized!");
 
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
