@@ -4,7 +4,7 @@ import sequelize from "../db";
 export class GameResult extends Model {
   declare id: number;
   declare userId: number;
-  declare characterId: number;
+  declare characterId: string;
   declare mood: number;
   declare money: number;
   declare energy: number;
@@ -20,7 +20,7 @@ GameResult.init(
       references: { model: "Users", key: "id" },
     },
     characterId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       references: { model: "Characters", key: "id" },
     },
