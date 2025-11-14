@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import { GameResult } from "../models/GameResult";
 import { authMiddleware } from "../middleware/auth";
+import { User } from "../models/User";
+import { Character } from "../models/Character";
 
 const router = Router();
 
@@ -44,6 +46,28 @@ router.post("/save", authMiddleware, async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Ошибка при сохранении результата" });
+  }
+});
+
+router.get("/all", authMiddleware, async (req: Request, res: Response) => {
+  try {
+    const results = await GameResult.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ["id", "email", "nickname"], // email, nickname пользователя
+        },
+        {
+          model: Character,
+          attributes: ["id", "name"], // имя персонажа
+        },
+      ],
+    });
+
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Ошибка при получении результатов" });
   }
 });
 
