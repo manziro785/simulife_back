@@ -23,6 +23,6 @@ export const authMiddleware = (
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Недействительный токен" }); // ← Добавлен return
+    return res.status(401).json({ message: "Недействительный токен" });
   }
 };
