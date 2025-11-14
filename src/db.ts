@@ -10,7 +10,7 @@ const sequelize = isProduction
       dialect: "postgres",
       protocol: "postgres",
       dialectOptions: {
-        ssl: { rejectUnauthorized: false }, // обязательно для Render
+        ssl: { rejectUnauthorized: false },
       },
     })
   : new Sequelize(
