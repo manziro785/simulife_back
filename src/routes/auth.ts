@@ -19,7 +19,7 @@ router.post("/register", async (req: Request, res: Response) => {
   const token = jwt.sign({ email: newUser.email }, JWT_SECRET, {
     expiresIn: "24h",
   });
-  res.json({ message: "Регистрация успешна", token });
+  res.json({ message: "Регистрация успешна ", token });
 });
 
 router.post("/login", async (req: Request, res: Response) => {
