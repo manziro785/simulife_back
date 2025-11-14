@@ -11,6 +11,8 @@ import "./models/Character";
 import "./models/DayStoty";
 import { Request, Response } from "express";
 import { authMiddleware } from "./middleware/auth";
+import gameResultsRoutes from "./routes/gameResults";
+import "./models/GameResult";
 
 dotenv.config();
 
@@ -23,6 +25,7 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/seed", seedRoutes);
 app.use("/characters", authMiddleware, charactersRoutes);
+app.use("/game-results", authMiddleware, gameResultsRoutes);
 app.use("/days", authMiddleware, daysRoutes);
 
 app.get("/", (req: Request, res: Response) =>
