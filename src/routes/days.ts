@@ -1,10 +1,9 @@
 import { Router, Request, Response } from "express";
 import { DayStory } from "../models/DayStoty";
-import { authMiddleware } from "../middleware/auth"; // ← импорт
+import { authMiddleware } from "../middleware/auth"; 
 
 const router = Router();
 
-// ШАГ 1: Защищённый роут (только с токеном)
 router.get("/", authMiddleware, async (req: Request, res: Response) => {
   try {
     const days = await DayStory.findAll();

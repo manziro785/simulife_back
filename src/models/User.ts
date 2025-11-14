@@ -4,6 +4,7 @@ import sequelize from "../db";
 export class User extends Model {
   declare id: number;
   declare email: string;
+  declare nickname: string;
   declare password: string;
 }
 

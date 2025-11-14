@@ -10,7 +10,7 @@ import "./models/User";
 import "./models/Character";
 import "./models/DayStoty";
 import { Request, Response } from "express";
-import { authMiddleware } from "./middleware/auth"; // ← ШАГ 1: ИМПОРТ
+import { authMiddleware } from "./middleware/auth";
 
 dotenv.config();
 
@@ -33,10 +33,10 @@ app.get("/", (req: Request, res: Response) =>
   try {
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
-    console.log("✅ Database connected and synchronized!");
+    console.log("Database connected!");
 
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (err) {
-    console.error("❌ Database connection failed:", err);
+    console.error("Database connection failed:", err);
   }
 })();
