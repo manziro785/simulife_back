@@ -57,7 +57,7 @@ async function migrateNicknames() {
     console.log("Миграция завершена успешно!");
     process.exit(0);
   } catch (error) {
-    console.error("Ошибка миграции:", error);
+    console.error("Ошибка миграции :", error);
     process.exit(1);
   }
 }
