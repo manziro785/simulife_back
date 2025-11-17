@@ -32,7 +32,7 @@ router.post("/login", async (req: Request, res: Response) => {
   const token = jwt.sign({ email: user.email }, JWT_SECRET, {
     expiresIn: "24h",
   });
-  res.json({ message: "Успешный вход", token });
+  res.json({ message: "Успешный вход", token, nickname: user.nickname });
 });
 
 router.get("/users", authMiddleware, async (req: Request, res: Response) => {
